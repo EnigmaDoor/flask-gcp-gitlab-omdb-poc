@@ -1,11 +1,14 @@
 *~
+.env
+
+__pycache__
 
 secrets
 secrets/*
 apikey
 *_key.json
 
-petry.lock
+poetry.lock
 
 __init__.py
 __pycache__
