@@ -1,0 +1,41 @@
+variables:
+  GCP_PROJECT: flask-gcp-gitlab-omdb-poc
+  GCP_SERVICE_PROD: flask-gcp-gitlab-omdb-poc
+  GCR_IMAGE: eu.gcr.io/${GCP_PROJECT}/${GCP_SERVICE_PROD}
+  GCP_REGION: gcp-region
+  GCP_ACCOUNT: local-dev-april24@divine-cortex-419416.iam.gserviceaccount.com
+
+stages:
+- build
+# - test
+# - deploy-dev/qa
+# - e2e
+- deploy
+
+docker-build:
+  stage: build
+  image: docker:stable
+  services:
+    - docker:dind
+  before_script:
+    - echo $GOOGLE_CLOUD_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
+    - cat /tmp/$CI_PIPELINE_ID.json | docker login -u _json_key --password-stdin https://eu.gcr.io
+  script:
+    - docker build -t $GCR_IMAGE:latest -t $GCR_IMAGE:$CI_COMMIT_SHORT_SHA  .
+    - docker push $GCR_IMAGE
+  after_script:
+    - docker logout eu.gcr.io
+    - rm /tmp/$CI_PIPELINE_ID.json
+
+deploy-prod:
+  stage: deploy
+  image: google/cloud-sdk:slim
+  before_script:
+    - echo $GOOGLE_CLOUD_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
+    - gcloud auth activate-service-account $GCP_ACCOUNT --key-file=/tmp/$CI_PIPELINE_ID.json
+  script:
+    - gcloud run deploy $GCP_SERVICE_PROD --image $GCR_IMAGE:latest --platform managed --region $GCP_REGION --project $GCP_PROJECT --allow-unauthenticated --set-env-vars=ENV=prod
+  after_script:
+    - rm /tmp/$CI_PIPELINE_ID.json
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

@@ -1,1 +1,11 @@
+*~
+
+secrets
+secrets/*
 apikey
+*_key.json
+
+petry.lock
+
+__init__.py
+__pycache__
