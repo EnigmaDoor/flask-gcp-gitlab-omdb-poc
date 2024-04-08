@@ -2,7 +2,7 @@ variables:
   GCP_PROJECT: flask-gcp-gitlab-omdb-poc
   GCP_SERVICE_PROD: flask-gcp-gitlab-omdb-poc
   GCR_IMAGE: eu.gcr.io/${GCP_PROJECT}/${GCP_SERVICE_PROD}
-  GCP_REGION: gcp-region
+  GCP_REGION: europe-west1
   GCP_ACCOUNT: local-dev-april24@divine-cortex-419416.iam.gserviceaccount.com
 
 stages:
