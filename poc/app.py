@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
-from omdb import OMDB
-from api import setup_flask
+
+from .omdb import OMDB
+from .api import setup_flask
 
 def main():
     # Load environment
@@ -20,4 +21,4 @@ def main():
 
     # Run Flask
     app = setup_flask()
-    app.run(host='0.0.0.0', port=os.getenv['PORT'])
+    app.run(host='0.0.0.0', port=os.getenv['PORT'], debug=True)
