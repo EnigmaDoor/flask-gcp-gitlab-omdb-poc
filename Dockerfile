@@ -10,4 +10,4 @@ RUN pip3 install poetry psycopg2-binary
 RUN poetry config virtualenvs.create false
 RUN poetry install --only main
 
-CMD exec gunicorn --bind 0.0.0.0:5000 --workers 1 --threads 1 --timeout 3000 poc:app
+CMD exec gunicorn --bind 0.0.0.0:5000 --workers 1 --threads 1 --timeout 3000 wsgi:app

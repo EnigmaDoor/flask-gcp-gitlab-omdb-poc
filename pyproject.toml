@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "poc"
+name = "wsgi"
 version = "0.1.0"
 description = ""
 authors = ["EnigmaDoor <diego.mrnj@gmail.com>"]
