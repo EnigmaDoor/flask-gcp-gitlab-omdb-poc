@@ -21,6 +21,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     OMDB_APIKEY = os.getenv('OMDB_APIKEY')
+    OMDB_TOSEED = 100
 
 class ProductionConfig(Config):
     DEBUG = False

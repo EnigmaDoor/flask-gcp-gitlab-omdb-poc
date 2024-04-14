@@ -1,1 +1,3 @@
 Dockerfile > gunicorn port is 5000 hardcoded, change to env
+
+unifier .env & config.py
