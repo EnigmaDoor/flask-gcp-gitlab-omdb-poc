@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:3.8-slim-buster
 # or whatever version of Python you want to use...
 
 ENV PYTHONUNBUFFERED True
@@ -6,8 +6,8 @@ ENV PYTHONUNBUFFERED True
 COPY ./ /app/
 WORKDIR /app
 
-RUN pip3 install poetry
+RUN pip3 install poetry psycopg2-binary
 RUN poetry config virtualenvs.create false
 RUN poetry install --only main
 
-CMD exec gunicorn --bind :5000 --workers 1 --threads 8 --timeout 5 poc:app
+CMD exec gunicorn --bind 0.0.0.0:5000 --workers 1 --threads 1 --timeout 3000 poc:app
