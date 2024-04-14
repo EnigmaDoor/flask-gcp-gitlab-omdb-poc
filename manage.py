@@ -1,6 +1,6 @@
 import os
 from flask.cli import FlaskGroup
-
+11;rgb:3030/0a0a/2424
 from src.app import app, db
 from src.config import Config
 from src.omdb import OMDB
@@ -20,10 +20,10 @@ def create_db():
 def seed_db():
     omdb = OMDB(app.config['OMDB_APIKEY'])
     movies_set = omdb.pull_movies('test', app.config['OMDB_TOSEED'])
-    movies = map(lambda x: Movie(title=x['Title'], omdb_id=x['imdbID']), movies_set)
+    movies = map(lambda x: Movie(title=x['Title'], imdb_id=x['imdbID']), movies_set)
     for movie in movies:
         db.session.add(movie)
-    db.session.add(User(email="admin@admin.admin"))
+    db.session.add(User(email='admin@admin.admin', password_plaintext='admin'))
     db.session.commit()
 
 if __name__ == '__main__':

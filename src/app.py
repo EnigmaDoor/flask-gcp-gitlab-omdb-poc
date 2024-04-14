@@ -6,15 +6,19 @@ from .config import Config
 from .db import setup_db
 from .routes import setup_routes
 
-# Load environment
-load_dotenv()
+def create_app():
+    # Load environment
+    load_dotenv()
 
-# Setup Flask
-app = Flask(__name__)
-app.config.from_object(Config)
-setup_routes(app)
+    # Setup Flask
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    setup_routes(app)
 
-# Load & check DB content
-db = setup_db(app)
+    # Load & check DB content
+    db = setup_db(app)
 
-print("INITIALIZED APP")
+    print("INITIALIZED APP")
+    return app, db
+
+app, db = create_app()
