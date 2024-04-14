@@ -1,6 +1,5 @@
 import os
 from flask.cli import FlaskGroup
-11;rgb:3030/0a0a/2424
 from src.app import app, db
 from src.config import Config
 from src.omdb import OMDB

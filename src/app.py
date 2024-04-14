@@ -3,7 +3,7 @@ from flask import Flask
 from dotenv import load_dotenv
 
 from .config import Config
-from .db import setup_db
+from .models import db
 from .routes import setup_routes
 
 def create_app():
@@ -15,10 +15,9 @@ def create_app():
     app.config.from_object(Config)
     setup_routes(app)
 
-    # Load & check DB content
-    db = setup_db(app)
+    # Setup DB
+    db.init_app(app)
 
-    print("INITIALIZED APP")
-    return app, db
+    return app
 
-app, db = create_app()
+app = create_app()

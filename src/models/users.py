@@ -1,12 +1,13 @@
 from werkzeug.security import check_password_hash, generate_password_hash
-from ..app import db
+from sqlalchemy import Column, Integer, String
+from .base import BaseModel
 
-class User(db.Model):
+class User(BaseModel):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(128), unique=True, nullable=False)
-    password_hashed = db.Column(db.String(255), nullable=False)
+    id = Column(Integer, primary_key=True)
+    email = Column(String(128), unique=True, nullable=False)
+    password_hashed = Column(String(255), nullable=False)
 
     def __init__(self, email, password_plaintext):
         self.email = email

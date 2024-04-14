@@ -1,11 +1,12 @@
-from ..app import db
+from sqlalchemy import Column, Integer, String
+from .base import BaseModel
 
-class Movie(db.Model):
+class Movie(BaseModel):
     __tablename__ = "movies"
 
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(128), unique=False, nullable=False)
-    imdb_id = db.Column(db.String(128), unique=True, nullable=False)
+    id = Column(Integer, primary_key=True)
+    title = Column(String(128), unique=False, nullable=False)
+    imdb_id = Column(String(128), unique=True, nullable=False)
 
     def __init__(self, title, imdb_id):
         self.title = title
