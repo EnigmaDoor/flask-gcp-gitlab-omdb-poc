@@ -24,4 +24,4 @@ class User(BaseModel):
         return generate_password_hash(password_plaintext)
 
     def __repr__(self):
-        return f'<User: {self.email}>'
+        return f'<User {self.id}: {self.email}>'

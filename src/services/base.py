@@ -20,8 +20,8 @@ class BaseService(object):
             raise Exception('No Record Found.')
         return entity
 
-    def get_all(self):
-        entities = self.repository.get_all()
+    def get_all(self, page: int=1, quantity: int=10, filters: str=''):
+        entities = self.repository.get_all(page, quantity, filters)
         return entities
 
     def delete(self, entity_id):

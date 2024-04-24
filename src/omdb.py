@@ -2,9 +2,17 @@ from typing import Optional, Dict
 
 import requests
 
+class OMDBException(Exception):
+    def __init__(self, message: str):
+        self._message = message
+        super().__init__(self.message)
+
+    @property
+    def message(self) -> str:
+        return self._message
+
 class OMDB:
     """OMDB wrapper
-
     Args:
         apikey (str): API Key to use
         timeout (float): Timeout in seconds
@@ -22,6 +30,19 @@ class OMDB:
             self._session.close()
             self._session = None
 
+    def get_movie(self, title: Optional[str] = None, imdb_id: Optional[str] = None) -> Dict:
+        params = {
+            "apikey": self.apikey
+        }
+        if imdb_id:
+            params['i'] = imdb_id
+        elif title:
+            params['t'] = title
+        else:
+            raise OMDBException('Either title or imdb_id is required')
+        response = self._get_response(params)
+        return response
+
     def pull_movies(self, query: str = "", amount: int = 100, page: int = 1) -> Dict:
         params = {
             "s": query,
@@ -34,8 +55,7 @@ class OMDB:
         while cont and len(results) < amount:
             new_page = self._get_response(params)
             if new_page['Response'] == False:
-                print(new_page)
-                return results
+                raise OMDBException('No response available')
             ### Append all results up to the amount specified
             results += new_page['Search'][:min(amount - len(results), len(new_page['Search']))]
             params['page'] += 1

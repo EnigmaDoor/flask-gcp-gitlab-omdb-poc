@@ -12,11 +12,11 @@ class BaseRepository(object):
         self.model = model
 
     def get(self, entity_id):
-        entity = db.session.query(self.model).get(entity_id)
+        entity = db.session.get(self.model, entity_id)
         return entity
 
     def get_all(self):
-        entities = db.session.query(self.model).all()
+        query = db.session.query(self.model).all()
         return entities
 
     def delete(self, entity):

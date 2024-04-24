@@ -10,6 +10,9 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
 
+    LOG_FORMAT = '%(asctime)s:%(levelname)s:%(name)s:%(message)s'
+    LOG_LEVEL = 'DEBUG'
+
     DB_DB = os.getenv('DB_DB')
     DB_HOST = os.getenv('DB_HOST')
     DB_PORT = os.getenv('DB_PORT')
@@ -20,8 +23,9 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = f'{DB_DB}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    OMDB_USE_TO_SEED = os.getenv('OMDB_USE_TO_SEED', False)
     OMDB_APIKEY = os.getenv('OMDB_APIKEY')
-    OMDB_TOSEED = 100
+    OMDB_TOSEED = 50
 
 class ProductionConfig(Config):
     DEBUG = False
